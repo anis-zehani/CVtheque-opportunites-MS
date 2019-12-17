@@ -7,11 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.Version;
 
 import lombok.Data;
 
@@ -30,13 +28,10 @@ public class Utilisateur implements Serializable {
 	private static final long serialVersionUID = 3635172837730319055L;
 
 	@Id
-	@GeneratedValue
+	//Attention : ne doit pas être Generated car il doit avoir le même UUID que le MS Maître
 	@Column(name = "id", updatable = false, nullable = false, unique=true)
 	private UUID id;
 
-	@Version
-	private int version;
-	
 	@Column(unique = true)
 	private String identite;
 	
@@ -59,16 +54,8 @@ public class Utilisateur implements Serializable {
 		return id;
 	}
 
-	public int getVersion() {
-		return version;
-	}
-
 	public void setId(UUID id) {
 		this.id = id;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
 	}
 
 	public void setIdentite(String identite) {

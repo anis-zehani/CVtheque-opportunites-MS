@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Version;
 import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
@@ -27,9 +26,6 @@ public class Certification implements Serializable {
 	@Column(name = "id", updatable = false, nullable = false, unique=true)
 	private UUID id;
 
-	@Version
-	private int version;
-	
     @NotEmpty(message="Odix - certification ne peut pas être vide")
     @Column(unique=true)
 	private String nomCertification;
@@ -53,16 +49,8 @@ public class Certification implements Serializable {
 		return id;
 	}
 
-	public int getVersion() {
-		return version;
-	}
-
 	public void setId(UUID id) {
 		this.id = id;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
 	}
 
 	public String getNomCertification() {

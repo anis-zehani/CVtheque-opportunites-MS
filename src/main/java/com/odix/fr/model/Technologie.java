@@ -6,10 +6,8 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Version;
 import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
@@ -23,13 +21,10 @@ public class Technologie implements Serializable {
 	private static final long serialVersionUID = -3422261716301379660L;
 
 	@Id
-	@GeneratedValue
+	//Attention : ne doit pas être Generated car il doit avoir le même UUID que le MS Maître
 	@Column(name = "id", updatable = false, nullable = false, unique=true)
 	private UUID id;
 
-	@Version
-	private int version;
-	
     @NotEmpty(message="Odix - technologie ne peut pas être vide")
     @Column(unique=true)
     private String nomTechnologie;
@@ -54,21 +49,10 @@ public class Technologie implements Serializable {
 		return id;
 	}
 
-
-	public int getVersion() {
-		return version;
-	}
-
-
+	
 	public void setId(UUID id) {
 		this.id = id;
 	}
-
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
 
 	public String getNomTechnologie() {
 		return nomTechnologie;

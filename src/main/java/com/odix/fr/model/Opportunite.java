@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Version;
 
 import lombok.Data;
 	
@@ -33,9 +32,6 @@ public class Opportunite implements Serializable {
 	@Column(name = "id", updatable = false, nullable = false, unique=true)
 	private UUID id;
 
-	@Version
-	private int version;
-	
 	@Column
 	private String titreOpportunite;
 	
@@ -91,16 +87,8 @@ public class Opportunite implements Serializable {
 		return id;
 	}
 
-	public int getVersion() {
-		return version;
-	}
-
 	public void setId(UUID id) {
 		this.id = id;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
 	}
 
 	public String getTitreOpportunite() {

@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Version;
 
 import lombok.Data;
 
@@ -25,9 +24,6 @@ public class OpportunitesFavoris implements Serializable {
 	@Column(name = "id", updatable = false, nullable = false, unique=true)
 	private UUID id;
 
-	@Version
-	private int version;
-	
 	@Column
 	private UUID idUtilisateur;
 	
@@ -45,16 +41,8 @@ public class OpportunitesFavoris implements Serializable {
 		return id;
 	}
 
-	public int getVersion() {
-		return version;
-	}
-
 	public void setId(UUID id) {
 		this.id = id;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
 	}
 
 	public void setIdUtilisateur(UUID idUtilisateur) {
