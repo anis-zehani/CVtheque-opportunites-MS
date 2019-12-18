@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odix.fr.model.Technologie;
-import com.odix.fr.repository.TechnologieRepository;
 import com.odix.fr.service.TechnologieService;
 
 @Service
@@ -20,10 +19,6 @@ public class TechnologieConsumers {
 	
 	@Autowired
 	TechnologieService technologieService;
-	
-	@Autowired
-	TechnologieRepository technologieRepository;
-	
 	
     @KafkaListener(topics = "add-technologie-topic")
     public void addTechnologieConsumer(String message) throws IOException {
