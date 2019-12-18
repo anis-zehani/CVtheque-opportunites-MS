@@ -23,7 +23,7 @@ public class CertificationConsumers {
 	
     @KafkaListener(topics = "add-certification-topic")
     public void addCertificationConsumer(String message) throws IOException {
-        System.out.print(String.format("#### -> addCertificationConsumer -> %s", message +"\n"));
+        System.out.print(String.format("#### -> addCertificationConsumer : Opportunite-MS  -> %s", message +"\n"));
 
         try{
         	OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -37,7 +37,7 @@ public class CertificationConsumers {
     
     @KafkaListener(topics = "edit-certification-topic")
     public void editCertificationConsumer(String message) throws IOException {
-        System.out.print(String.format("#### -> editCertificationConsumer -> %s", message +"\n"));
+        System.out.print(String.format("#### -> editCertificationConsumer : Opportunite-MS  -> %s", message +"\n"));
 
         try{
         	OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -51,7 +51,7 @@ public class CertificationConsumers {
     
     @KafkaListener(topics = "delete-certification-topic")
     public void deleteCertificationConsumer(String message) throws IOException {
-        System.out.print(String.format("#### -> deleteCertificationConsumer -> %s", message +"\n"));
+        System.out.print(String.format("#### -> deleteCertificationConsumer : Opportunite-MS  -> %s", message +"\n"));
 
         try{
             this.certificationService.deleteCertification(UUID.fromString(message));

@@ -22,7 +22,7 @@ public class PartenaireConsumers {
 	
     @KafkaListener(topics = "add-partenaire-topic")
     public void addPartenaireConsumer(String message) throws IOException {
-        System.out.print(String.format("#### -> addPartenaireConsumer : Opportunite-Service -> %s", message +"\n"));
+        System.out.print(String.format("#### -> addPartenaireConsumer : Opportunite-MS  -> %s", message +"\n"));
 
         try{
         	OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -36,7 +36,7 @@ public class PartenaireConsumers {
     
     @KafkaListener(topics = "edit-partenaire-topic")
     public void editPartenaireConsumer(String message) throws IOException {
-        System.out.print(String.format("#### -> editPartenaireConsumer : Opportunite-Service -> %s", message +"\n"));
+        System.out.print(String.format("#### -> editPartenaireConsumer : Opportunite-MS -> %s", message +"\n"));
 
         try{
         	OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -51,7 +51,7 @@ public class PartenaireConsumers {
     
     @KafkaListener(topics = "add-partenaire-topic")
     public void deletePartenaireConsumer(String message) throws IOException {
-        System.out.print(String.format("#### -> deletePartenaireConsumer : Opportunite-Service -> %s", message +"\n"));
+        System.out.print(String.format("#### -> deletePartenaireConsumer : Opportunite-MS -> %s", message +"\n"));
 
         try{
         	this.partenaireService.deletePartenaire(UUID.fromString(message));

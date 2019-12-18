@@ -22,7 +22,7 @@ public class TechnologieConsumers {
 	
     @KafkaListener(topics = "add-technologie-topic")
     public void addTechnologieConsumer(String message) throws IOException {
-        System.out.print(String.format("#### -> addTechnologieConsumer -> %s", message +"\n"));
+        System.out.print(String.format("#### -> addTechnologieConsumer : Opportunite-MS  -> %s", message +"\n"));
 
         try{
         	OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -36,7 +36,7 @@ public class TechnologieConsumers {
     
     @KafkaListener(topics = "edit-technologie-topic")
     public void editTechnologieConsumer(String message) throws IOException {
-        System.out.print(String.format("#### -> editTechnologieConsumer -> %s", message +"\n"));
+        System.out.print(String.format("#### -> editTechnologieConsumer : Opportunite-MS  -> %s", message +"\n"));
 
         try{
         	OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -50,7 +50,7 @@ public class TechnologieConsumers {
     
     @KafkaListener(topics = "delete-technologie-topic")
     public void deleteTechnologieConsumer(String message) throws IOException {
-        System.out.print(String.format("#### -> deleteTechnologieConsumer -> %s", message +"\n"));
+        System.out.print(String.format("#### -> deleteTechnologieConsumer : Opportunite-MS  -> %s", message +"\n"));
 
         try{
             this.technologieService.deleteTechnologie(UUID.fromString(message));
