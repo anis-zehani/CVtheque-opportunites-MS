@@ -49,7 +49,7 @@ public class PartenaireConsumers {
     }
     
     
-    @KafkaListener(topics = "add-partenaire-topic")
+    @KafkaListener(topics = "delete-partenaire-topic")
     public void deletePartenaireConsumer(String message) throws IOException {
         System.out.print(String.format("#### -> deletePartenaireConsumer : Opportunite-MS -> %s", message +"\n"));
 

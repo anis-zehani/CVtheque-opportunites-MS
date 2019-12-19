@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.odix.fr</groupId>
-	<artifactId>opportunite-service</artifactId>
+	<artifactId>opportunites-MS</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>opportunite-service</name>
+	<name>opportunites-MS</name>
 	<description>Odix : le sourcing rendu facile</description>
 
 	<properties>
