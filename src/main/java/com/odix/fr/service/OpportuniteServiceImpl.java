@@ -117,6 +117,10 @@ public class OpportuniteServiceImpl implements OpportuniteService {
 	public Opportunite getOpportunite(UUID id) {
 		return opportuniteRepository.findOneById(id);
 	}
+	
+	public Long getCountOpportunites() {
+		return opportuniteRepository.count();
+	}
 
 	//Ajouter une opportunité
 	public Opportunite addOpportunite(Opportunite opportunite) {

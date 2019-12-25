@@ -81,6 +81,12 @@ public class OpportuniteController {
 		return opportuniteService.getOpportunite(id);
 	}
 	
+	// Feign : Statistiques-MS
+	@GetMapping("/getCountOpportunites")
+	public Long getCountOpportunites() {
+		return opportuniteService.getCountOpportunites();
+	}
+	
 	@PostMapping()
 	public Opportunite addOpportunite(@Valid @RequestBody Opportunite opportunite) {
 		return opportuniteService.addOpportunite(opportunite);

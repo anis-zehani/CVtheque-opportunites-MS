@@ -25,6 +25,8 @@ public interface OpportuniteService {
 	
 	public Opportunite getOpportunite(UUID id);
 	
+	public Long getCountOpportunites();
+	
 	
 	public Opportunite addOpportunite(Opportunite opportunite);
 	
