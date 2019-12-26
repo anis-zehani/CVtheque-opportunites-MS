@@ -5,16 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.odix.fr.model.Candidat;
 import com.odix.fr.model.Etat;
 import com.odix.fr.model.Opportunite;
 import com.odix.fr.model.Utilisateur;
 import com.odix.fr.model.Visibilite;
 import com.odix.fr.repository.OpportuniteRepository;
-
-// import com.cvtheque.org.model.Candidat;
+import com.odix.fr.util.Consts;
+import com.odix.fr.webClients.CandidatClient;
+import com.odix.fr.webClients.NotificationClient;
+import com.odix.fr.webClients.UtilisateurClient;
 
 
 @Service
@@ -22,22 +24,25 @@ public class OpportuniteServiceImpl implements OpportuniteService {
 	
 	private final OpportuniteRepository opportuniteRepository;
 	
-	// Je remplace ça par un Remot Call avec Feign
-	@Autowired
-	// CandidatService candidatService;
-	RemoteCallCandidatService loadBalancerCandidatService;
+	CandidatClient candidatClient;
 	
-	/*@Autowired
-	NotificationService notificationService;*/
-	
-	@Autowired
-	// UtilisateurService utilisateurService;
-	RemoteCallUtilisateurService loadBalancerUtilisateurService;
-	
-	
-	OpportuniteServiceImpl(OpportuniteRepository opportuniteRepository) {
+	UtilisateurClient utilisateurClient;
+
+	NotificationClient notificationClient;
+
+	OpportuniteServiceImpl
+	(
+			OpportuniteRepository opportuniteRepository, 
+			CandidatClient candidatClient,
+			UtilisateurClient utilisateurClient,
+			NotificationClient notificationClient
+	) 
+	{
 		super();
 		this.opportuniteRepository = opportuniteRepository;
+		this.candidatClient = candidatClient;
+		this.utilisateurClient = utilisateurClient;
+		this.notificationClient = notificationClient;
 	}
 
 	public List<Opportunite> getAllOpportunites(String etatOpportunite) {
@@ -139,22 +144,21 @@ public class OpportuniteServiceImpl implements OpportuniteService {
 			else 
 			{
 				// Génération d'une Notification Destinée à l'Administrateur : uniquement si Opportunité est ajoutée par un Partenaire
-				// Utilisateur admin = utilisateurService.getUtilisateurByRole("ROLE_ADMINISTRATEUR");
 				// Feign
-				Utilisateur admin = loadBalancerUtilisateurService.getUtilisateurByRole("ROLE_ADMINISTRATEUR");
+				Utilisateur admin = utilisateurClient.getUtilisateurByRole("ROLE_ADMINISTRATEUR");
 				List<Utilisateur> listeDestinatairesNotification = new ArrayList<Utilisateur>();
 				listeDestinatairesNotification.add(admin);
 				
 				// Notification générée par le système (ou bien disons par l'Admin) vers lui même (l'Admin)
-				/*notificationService.
+				// Feign
+				notificationClient.
 				generateSimpleNotification(Consts.objetMsgNotificationAjoutOpportunite, 
 										   Consts.corpsMsgNotificationAjoutOpportunite, 
-										   listeDestinatairesNotification, */
-										   /*utilisateurService.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),*/
-										   /*loadBalancerUtilisateurService.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
+										   listeDestinatairesNotification,
+										   utilisateurClient.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
+										   utilisateurClient.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
 										   null,
-										   null,
-										   null);*/
+										   null);
 			}
 
 			Opportunite addedOpportunite =  opportuniteRepository.save(opportunite);
@@ -211,22 +215,21 @@ public class OpportuniteServiceImpl implements OpportuniteService {
 			// On emet la Notification seulement s'il y a un Reponsable de l'Opportuntié
 			if(editedOpportunite.getResponsableOpportunite().getId() != null) {
 				// Génération d'une Notification Destinée à l'Administrateur
-				// Utilisateur admin = utilisateurService.getUtilisateurByRole("ROLE_ADMINISTRATEUR");
 				// Feign
-				Utilisateur admin = loadBalancerUtilisateurService.getUtilisateurByRole("ROLE_ADMINISTRATEUR");
+				Utilisateur admin = utilisateurClient.getUtilisateurByRole("ROLE_ADMINISTRATEUR");
 				List<Utilisateur> listeDestinatairesNotification = new ArrayList<Utilisateur>();
 				listeDestinatairesNotification.add(admin);
 				
 				// Notification générée par le système (ou bien disons par l'Admin) vers lui même (l'Admin)
-				/*notificationService.
+				// Feign
+				notificationClient.
 				generateSimpleNotification(Consts.objetMsgNotificationModificationOpportunite, 
 										   Consts.corpsMsgNotificationModificationOpportunite, 
-										   listeDestinatairesNotification, */
-										   /*utilisateurService.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),*/
-										   /*loadBalancerUtilisateurService.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
+										   listeDestinatairesNotification,
+										   utilisateurClient.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
+										   utilisateurClient.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
 										   null,
-										   null,
-										   editedOpportunite);*/
+										   editedOpportunite);
 			}
 			return editedOpportunite;
 		}
@@ -284,16 +287,15 @@ public class OpportuniteServiceImpl implements OpportuniteService {
 			//On récupére les Candidats liés à cette Opportunités 
 			// List<Candidat> listeCandidats = candidatService.getAllCandidatsByOpportunite(idOpportunite);
 			// Feign 
-			List<Utilisateur> listeCandidats = loadBalancerCandidatService.getAllCandidatsByOpportunite(idOpportunite);
+			List<Candidat> listeCandidats = candidatClient.getAllCandidatsByOpportunite(idOpportunite);
 			
 			//On supprime les liens clés étrangères dans la table jointure
 			if(!listeCandidats.isEmpty())
 			{
 				for(int i=0;i<listeCandidats.size();i++)
 				{
-					// candidatService.deleteLinkCandidatOpportunite(listeCandidats.get(i).getId(), idOpportunite);
 					// Feign 
-					loadBalancerCandidatService.deleteLinkCandidatOpportunite(listeCandidats.get(i).getId(), idOpportunite);
+					candidatClient.deleteLinkCandidatOpportunite(listeCandidats.get(i).getId(), idOpportunite);
 				}
 			}
 			
