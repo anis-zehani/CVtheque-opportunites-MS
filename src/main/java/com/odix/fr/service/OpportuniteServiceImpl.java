@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.odix.fr.model.Candidat;
 import com.odix.fr.model.Etat;
 import com.odix.fr.model.Opportunite;
+import com.odix.fr.model.POJONotification;
 import com.odix.fr.model.Utilisateur;
 import com.odix.fr.model.Visibilite;
 import com.odix.fr.repository.OpportuniteRepository;
@@ -139,6 +140,7 @@ public class OpportuniteServiceImpl implements OpportuniteService {
 			
 			if(opportunite.getResponsableOpportunite().getId() == null)
 			{
+				//Pas de Notification dans ce cas : car c'est l'Admin
 				opportunite.setResponsableOpportunite(null);
 			}
 			else 
@@ -151,14 +153,15 @@ public class OpportuniteServiceImpl implements OpportuniteService {
 				
 				// Notification générée par le système (ou bien disons par l'Admin) vers lui même (l'Admin)
 				// Feign
-				notificationClient.
-				generateSimpleNotification(Consts.objetMsgNotificationAjoutOpportunite, 
-										   Consts.corpsMsgNotificationAjoutOpportunite, 
-										   listeDestinatairesNotification,
-										   utilisateurClient.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
-										   utilisateurClient.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
-										   null,
-										   null);
+				POJONotification pojoNotification = new POJONotification(
+						   Consts.objetMsgNotificationAjoutOpportunite, 
+						   Consts.corpsMsgNotificationAjoutOpportunite, 
+						   listeDestinatairesNotification,
+						   utilisateurClient.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
+						   null,
+						   null,
+						   opportunite);
+				notificationClient.generateSimpleNotification(pojoNotification);
 			}
 
 			Opportunite addedOpportunite =  opportuniteRepository.save(opportunite);
@@ -222,14 +225,17 @@ public class OpportuniteServiceImpl implements OpportuniteService {
 				
 				// Notification générée par le système (ou bien disons par l'Admin) vers lui même (l'Admin)
 				// Feign
-				notificationClient.
-				generateSimpleNotification(Consts.objetMsgNotificationModificationOpportunite, 
-										   Consts.corpsMsgNotificationModificationOpportunite, 
-										   listeDestinatairesNotification,
-										   utilisateurClient.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
-										   utilisateurClient.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
-										   null,
-										   editedOpportunite);
+				
+				POJONotification pojoNotification = new POJONotification(
+						   Consts.objetMsgNotificationModificationOpportunite, 
+						   Consts.corpsMsgNotificationModificationOpportunite, 
+						   listeDestinatairesNotification,
+						   utilisateurClient.getUtilisateurById(opportunite.getResponsableOpportunite().getId()),
+						   null,
+						   null,
+						   editedOpportunite);
+				
+				notificationClient.generateSimpleNotification(pojoNotification);
 			}
 			return editedOpportunite;
 		}

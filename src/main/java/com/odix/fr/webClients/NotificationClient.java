@@ -1,27 +1,17 @@
 package com.odix.fr.webClients;
 
-import java.util.List;
-
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import com.odix.fr.model.Candidat;
-import com.odix.fr.model.Opportunite;
-import com.odix.fr.model.Utilisateur;
+import com.odix.fr.model.POJONotification;
+
+import feign.Headers;
 
 @FeignClient("notifications-MS")
 public interface NotificationClient {
 
-	@PostMapping("/generateSimpleNotification")
-	List<Candidat> generateSimpleNotification
-	(
-			   @PathVariable ("objetNotification") String objetNotification, 
-			   @PathVariable ("corpsNotification") String corpsNotification,
-			   @PathVariable ("listeDestinatairesNotification") List<Utilisateur> listeDestinatairesNotification, 
-			   @PathVariable ("generateurNotification") Utilisateur generateurNotification,
-			   @PathVariable ("candidatNotification") Utilisateur candidatNotification,
-			   @PathVariable ("partenaireNotification") Utilisateur partenaireNotification,
-			   @PathVariable ("opportuniteNotification") Opportunite opportuniteNotification
-	);
+	@PostMapping("/api/notification/generateSimpleNotification")
+	@Headers("Content-Type: application/json")
+	void generateSimpleNotification(@RequestBody POJONotification pojoNotification);
 }
