@@ -1,10 +1,14 @@
 package com.odix.fr.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
@@ -36,7 +40,30 @@ public class Candidat extends Utilisateur implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	private Utilisateur utilisateur;
 	
+	@ManyToMany
+	@JoinTable(name = "candidat_opportunite",
+	joinColumns = { @JoinColumn(name = "id_candidat") },
+	inverseJoinColumns = { @JoinColumn(name = "id_opportunite") })
+	private List<Opportunite> listeOpportunites;
+	
 	public Candidat() {
 		super();
 	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public List<Opportunite> getListeOpportunites() {
+		return listeOpportunites;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	public void setListeOpportunites(List<Opportunite> listeOpportunites) {
+		this.listeOpportunites = listeOpportunites;
+	}
+
 }
