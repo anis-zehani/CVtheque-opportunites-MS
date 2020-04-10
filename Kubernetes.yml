@@ -1,0 +1,36 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: opportunites-deployment
+  labels:
+    app: opportunites
+spec:
+  replicas: 1 #  tells deployment to run 1 pod matching the template
+  selector:
+    matchLabels:
+      app: opportunites
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: opportunites
+    spec:
+      containers:
+      - name: opportunites-container
+        image: registry.gitlab.com/gitlabodix/opportunites-ms
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8002
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opportunites-service
+spec:
+  selector:
+    app: opportunites
+  ports:
+    - port: 8002
+      targetPort: 8002
+
