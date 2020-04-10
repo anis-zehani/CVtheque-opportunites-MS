@@ -18,10 +18,12 @@ spec:
     spec:
       containers:
       - name: opportunites-container
-        image: registry.gitlab.com/gitlabodix/opportunites-ms
+        image: registry.gitlab.com/gitlabodix/cvtheque-opportunites-ms-prod
         imagePullPolicy: Always
         ports:
         - containerPort: 8002
+      imagePullSecrets:
+      - name: gitlab-secrets
 ---
 apiVersion: v1
 kind: Service
