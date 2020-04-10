@@ -23,7 +23,7 @@ spec:
         ports:
         - containerPort: 8002
       imagePullSecrets:
-      - name: gitlab-secrets
+      - name: gitlab-secrets-opportunites-ms
 ---
 apiVersion: v1
 kind: Service
