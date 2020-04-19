@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.odix.fr.model.Candidat;
@@ -25,10 +26,13 @@ public class OpportuniteServiceImpl implements OpportuniteService {
 	
 	private final OpportuniteRepository opportuniteRepository;
 	
+	@Autowired
 	CandidatClient candidatClient;
 	
+	@Autowired
 	UtilisateurClient utilisateurClient;
 
+	@Autowired
 	NotificationClient notificationClient;
 
 	OpportuniteServiceImpl

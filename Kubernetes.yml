@@ -3,18 +3,18 @@ kind: Deployment
 metadata:
   name: opportunites-deployment
   labels:
-    app: opportunites-MS
+    app: opportunites
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: opportunites-MS
+      app: opportunites
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: opportunites-MS
+        app: opportunites
     spec:
       containers:
       - name: opportunites-container
@@ -29,10 +29,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: opportunites-service
+  name: opportunites-ms
 spec:
   selector:
-    app: opportunites-MS
+    app: opportunites
   ports:
     - port: 8002
       targetPort: 8002
