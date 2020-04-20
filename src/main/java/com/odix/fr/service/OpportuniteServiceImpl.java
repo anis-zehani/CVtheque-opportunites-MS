@@ -37,17 +37,11 @@ public class OpportuniteServiceImpl implements OpportuniteService {
 
 	OpportuniteServiceImpl
 	(
-			OpportuniteRepository opportuniteRepository, 
-			CandidatClient candidatClient,
-			UtilisateurClient utilisateurClient,
-			NotificationClient notificationClient
+			OpportuniteRepository opportuniteRepository
 	) 
 	{
 		super();
 		this.opportuniteRepository = opportuniteRepository;
-		this.candidatClient = candidatClient;
-		this.utilisateurClient = utilisateurClient;
-		this.notificationClient = notificationClient;
 	}
 
 	public List<Opportunite> getAllOpportunites(String etatOpportunite) {
