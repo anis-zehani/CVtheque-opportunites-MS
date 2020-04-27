@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.odix.fr.model.Utilisateur;
 
-@FeignClient(name = "gateway-ms", fallback = UtilisateurClient.UtilisateurClientFallback.class)
+@FeignClient(name = "gateway-ms:8080", fallback = UtilisateurClient.UtilisateurClientFallback.class)
 public interface UtilisateurClient {
 
 	@GetMapping("/api/utilisateur/getUtilisateurByRole/{role}")

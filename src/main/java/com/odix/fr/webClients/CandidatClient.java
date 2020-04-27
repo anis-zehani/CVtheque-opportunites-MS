@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.odix.fr.model.Candidat;
 
-@FeignClient(name = "gateway-ms", fallback = CandidatClient.CandidatClientFallback.class)
+@FeignClient(name = "gateway-ms:8080", fallback = CandidatClient.CandidatClientFallback.class)
 public interface CandidatClient {
 
 	@GetMapping("/api/candidat/allCandidatsByOpportunite/{id}")
