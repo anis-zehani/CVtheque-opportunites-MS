@@ -7,7 +7,6 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +20,6 @@ import com.odix.fr.model.Opportunite;
 import com.odix.fr.service.OpportuniteService;
 
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/opportunite")
 public class OpportuniteController {
